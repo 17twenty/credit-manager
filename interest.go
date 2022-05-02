@@ -102,7 +102,7 @@ func (l *Loan) dumpTransactions(day int) {
 			}
 		}
 		if balance.GreaterThan(decimal.Zero) {
-			// log.Println("Carried interest on day", i)
+			log.Println("Carried interest on day", i)
 			dailyAPR := (l.apr / 365.00)
 			accInterest = accInterest.Add(balance.Mul(decimal.NewFromFloat(dailyAPR)))
 		}
@@ -135,7 +135,7 @@ func (l *Loan) GetLimitAndBalance(day int) (decimal.Decimal, decimal.Decimal) {
 func (l *Loan) GetInterestOwed(day int) decimal.Decimal {
 	var accInterest decimal.Decimal
 
-	// Starting at day 1 of billing period
+	// Starting at start of billing period
 	// We zip through and accumulate interest for the days we hold a balance
 	balance := decimal.Zero
 	for i := 0; i <= day; i++ {
@@ -149,7 +149,6 @@ func (l *Loan) GetInterestOwed(day int) decimal.Decimal {
 			}
 		}
 		if balance.GreaterThan(decimal.Zero) {
-			// log.Println("Carried interest on day", i)
 			dailyAPR := (l.apr / 365.00)
 			accInterest = accInterest.Add(balance.Mul(decimal.NewFromFloat(dailyAPR)))
 		}
